@@ -14,6 +14,11 @@ RUN \
 # Install configuration.
 COPY lighttpd.conf /etc/lighttpd/lighttpd.conf
 
+# Sanity check lighttpd configuration.
+RUN \
+	lighttpd -D -t  -f /etc/lighttpd/lighttpd.conf && \
+	lighttpd -D -tt -f /etc/lighttpd/lighttpd.conf
+
 # Run as a lighttpd user.
 USER lighttpd
 
