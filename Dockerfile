@@ -30,18 +30,17 @@ ENTRYPOINT ["/usr/sbin/lighttpd-angel", "-D", "-f", "/etc/lighttpd/lighttpd.conf
 # Use SIGINT to allow lighttpd-angel to attempt a graceful shutdown.
 STOPSIGNAL SIGINT
 
-# Check every few minutes to see if the server is still responding.
-HEALTHCHECK --interval=5m --timeout=10s \
-  CMD wget --spider http://localhost:8080
+# Check every once in a while to see if the server is still responding.
+HEALTHCHECK --interval=30m --timeout=10s \
+  CMD wget --spider http://localhost:8080/cgi-bin/awstats.pl
 
 # Awstats server.
-# http://localhost:8080/awstats/awstats.pl
 EXPOSE 8080/tcp
 
-# Awstats configuration.
+# Awstats configuration (read-only).
 VOLUME /etc/awstats
 
-# Awstats database.
+# Awstats database (read-write).
 VOLUME /var/lib/awstats
 
 # Logs for awstats to analyze (read-only).
