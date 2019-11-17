@@ -1,4 +1,4 @@
-CONTAINER_NAME=awstats
+CONTAINER_NAME=icecavern/awstats
 
 all: build
 
@@ -13,23 +13,23 @@ run: stop
 		--mount "type=volume,source=awstats-config,target=/etc/awstats" \
 		--mount "type=volume,source=awstats-data,target=/var/lib/awstats" \
 		--mount "type=volume,source=awstats-logs,target=/var/log/awstats" \
-		icecavern/awstats
+		$(CONTAINER_NAME)
 
 .PHONY: stop
 stop:
-	docker stop awstats || true
-	docker rm awstats || true
+	docker stop $(CONTAINER_NAME) || true
+	docker rm   $(CONTAINER_NAME) || true
 
 .PHONY: web
 web:
-	firefox http://127.0.0.1:8080
+	firefox http://127.0.0.1:8080/cgi-bin/awstats.pl
 
 .PHONY: shell
 shell:
-	docker exec -it --user 0 awstats /bin/sh
+	docker exec -it --user 0 $(CONTAINER_NAME) /bin/sh
 
 DOCKER_ALPINE=docker run --rm \
-	--volumes-from awstats \
+	--volumes-from $(CONTAINER_NAME) \
 	--mount "type=bind,source=$(PWD)/backup,target=/backup" \
 	alpine
 
