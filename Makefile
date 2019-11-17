@@ -1,12 +1,10 @@
 CONTAINER_NAME=awstats
-CONTAINER_TAG=version
 
 all: build
 
 .PHONY: build
 build:
 	docker build -t $(CONTAINER_NAME):latest .
-	docker tag $(CONTAINER_NAME):latest icecavern/awstats:$(CONTAINER_TAG)
 
 .PHONY: run
 run: stop
