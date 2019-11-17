@@ -9,7 +9,7 @@ build:
 .PHONY: run
 run: stop
 	docker run --name awstats --detach \
-		--publish 127.0.0.1:8080:8080/tcp \
+		--publish 127.0.0.1:8080:80/tcp \
 		--mount "type=volume,source=awstats-config,target=/etc/awstats" \
 		--mount "type=volume,source=awstats-data,target=/var/lib/awstats" \
 		--mount "type=volume,source=awstats-logs,target=/var/log/awstats" \
@@ -17,8 +17,8 @@ run: stop
 
 .PHONY: stop
 stop:
-	docker stop $(CONTAINER_NAME) || true
-	docker rm   $(CONTAINER_NAME) || true
+	docker stop awstats || true
+	docker rm   awstats || true
 
 .PHONY: web
 web:

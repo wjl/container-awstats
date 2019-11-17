@@ -19,9 +19,6 @@ RUN \
 	lighttpd -D -t  -f /etc/lighttpd/lighttpd.conf && \
 	lighttpd -D -tt -f /etc/lighttpd/lighttpd.conf
 
-# Run as a lighttpd user.
-USER lighttpd
-
 # Use lighttpd-angel.
 # * Automatically restarts as necessary.
 # * Doesn't close its stdout, allowing logging to work.
@@ -35,7 +32,7 @@ HEALTHCHECK --interval=30m --timeout=10s \
   CMD wget --spider http://localhost:8080/cgi-bin/awstats.pl
 
 # Awstats server.
-EXPOSE 8080/tcp
+EXPOSE 80/tcp
 
 # Awstats configuration (read-only).
 VOLUME /etc/awstats
