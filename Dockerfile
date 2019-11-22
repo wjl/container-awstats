@@ -29,7 +29,7 @@ STOPSIGNAL SIGINT
 
 # Check every once in a while to see if the server is still responding.
 HEALTHCHECK --interval=30m --timeout=10s \
-  CMD wget --spider http://localhost:8080/cgi-bin/awstats.pl
+  CMD wget --spider http://localhost:80/cgi-bin/awstats.pl
 
 # Awstats server.
 EXPOSE 80/tcp
